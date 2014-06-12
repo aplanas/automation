@@ -837,7 +837,7 @@ function get_proposal_filename()
 # generic function to modify values in proposals
 #   Note: strings have to be quoted like this: "'string'"
 #         "true" resp. "false" or "['one', 'two']" act as ruby values, not as string
-function proposal_modify_value()
+function proposal_set_value()
 {
   local proposal="$1"
   local proposaltype="$2"
@@ -852,18 +852,6 @@ function proposal_modify_value()
              j${variable}${operator}${value};
              puts JSON.pretty_generate(j)" < $pfile > ${pfile}.tmp
   mv ${pfile}.tmp ${pfile}
-}
-
-# wrapper for proposal_modify_value
-function proposal_set_value()
-{
-  proposal_modify_value "$1" "$2" "$3" "$4" "="
-}
-
-# wrapper for proposal_modify_value
-function proposal_increment_int()
-{
-  proposal_modify_value "$1" "$2" "$3" "$4" "+="
 }
 
 function enable_ssl_for_keystone()
@@ -909,7 +897,7 @@ function hacloud_configure_cluster_defaults()
     proposal_set_value pacemaker "$clustertype" "['attributes']['pacemaker']['stonith']['per_node']['nodes']['$node']['params']" "''"
   done
 
-  proposal_increment_int pacemaker "$clustertype" "['deployment']['pacemaker']['crowbar-revision']" 1
+  proposal_set_value pacemaker "$clustertype" "['deployment']['pacemaker']['crowbar-revision']" 1 "+="
   proposal_set_value pacemaker "$clustertype" "['description']" "'Pacemaker $clustertyp cluster'"
 }
 
