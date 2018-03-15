@@ -229,27 +229,27 @@
     when: item != "" and item != deployer_mgmt_ip
     become_user: ardana
 
-  - name: Run the actual deployment site.yml playbook
-    shell: |
-      ansible-playbook -vvv -i hosts/verb_hosts site.yml
-    args:
-      chdir: /var/lib/ardana/scratch/ansible/next/ardana/ansible
-    become: true
-    become_user: ardana
+  # - name: Run the actual deployment site.yml playbook
+  #   shell: |
+  #     ansible-playbook -vvv -i hosts/verb_hosts site.yml
+  #   args:
+  #     chdir: /var/lib/ardana/scratch/ansible/next/ardana/ansible
+  #   become: true
+  #   become_user: ardana
 
-  - name: Configure Cloud for Tempest run
-    shell: |
-      ansible-playbook -vvv -i hosts/verb_hosts ardana-cloud-configure.yml
-    args:
-      chdir: /var/lib/ardana/scratch/ansible/next/ardana/ansible
-    become: true
-    become_user: ardana
+  # - name: Configure Cloud for Tempest run
+  #   shell: |
+  #     ansible-playbook -vvv -i hosts/verb_hosts ardana-cloud-configure.yml
+  #   args:
+  #     chdir: /var/lib/ardana/scratch/ansible/next/ardana/ansible
+  #   become: true
+  #   become_user: ardana
 
-  - name: Run tempest
-    shell: |
-      ansible-playbook -vvv -i hosts/verb_hosts tempest-run.yml \
-                       -e run_filter="{{ tempest_run_filter }}"
-    args:
-      chdir: /var/lib/ardana/scratch/ansible/next/ardana/ansible
-    become: true
-    become_user: ardana
+  # - name: Run tempest
+  #   shell: |
+  #     ansible-playbook -vvv -i hosts/verb_hosts tempest-run.yml \
+  #                      -e run_filter="{{ tempest_run_filter }}"
+  #   args:
+  #     chdir: /var/lib/ardana/scratch/ansible/next/ardana/ansible
+  #   become: true
+  #   become_user: ardana
